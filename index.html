@@ -3,301 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Эссе: команды и инструменты Claude Code</title>
+<title>Скачать эссе — Claude Code</title>
 <style>
-  :root {
-    --bg: #f7f7f5;
-    --card: #ffffff;
-    --text: #2b2b2b;
-    --muted: #6b6b6b;
-    --accent: #c15f3c;
-    --accent-soft: #f3e4dd;
-    --border: #e3e3df;
-    --code-bg: #2b2b2b;
-    --code-text: #f1f1ee;
-  }
-  * { box-sizing: border-box; }
   body {
-    margin: 0;
-    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
+    margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, #c15f3c, #a84e30); color: #fff; text-align: center; padding: 24px;
   }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
-  header.hero {
-    background: linear-gradient(135deg, var(--accent), #a84e30);
-    color: #fff;
-    border-radius: 18px;
-    padding: 44px 40px;
-    margin-bottom: 40px;
-    box-shadow: 0 12px 30px rgba(193,95,60,0.25);
+  .box { max-width: 420px; }
+  h1 { font-size: 1.5rem; margin-bottom: 8px; line-height: 1.3; }
+  p { opacity: 0.9; margin: 0 0 28px; }
+  a.btn {
+    display: block; background: #fff; color: #a84e30; text-decoration: none;
+    font-size: 1.2rem; font-weight: 600; padding: 18px 24px; border-radius: 14px;
+    margin: 14px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   }
-  header.hero h1 { margin: 0 0 10px; font-size: 2rem; line-height: 1.25; }
-  header.hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
-  h2 {
-    font-size: 1.45rem;
-    margin: 44px 0 8px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--accent-soft);
-  }
-  h3 { font-size: 1.1rem; margin: 28px 0 6px; color: var(--accent); }
-  p { margin: 10px 0; }
-  .muted { color: var(--muted); }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 22px 26px;
-    margin: 18px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-  }
-  code, .cmd {
-    font-family: "SF Mono", "JetBrains Mono", Consolas, monospace;
-    background: var(--accent-soft);
-    color: #8a3c20;
-    padding: 1px 7px;
-    border-radius: 6px;
-    font-size: 0.92em;
-  }
-  ul { padding-left: 22px; }
-  li { margin: 6px 0; }
-  .toc { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 26px; }
-  .toc ol { margin: 6px 0 0; padding-left: 20px; }
-  .toc a { color: var(--accent); text-decoration: none; }
-  .toc a:hover { text-decoration: underline; }
-  footer { margin-top: 50px; color: var(--muted); font-size: 0.9rem; text-align: center; }
-  .tag {
-    display: inline-block;
-    background: var(--accent-soft);
-    color: #8a3c20;
-    border-radius: 999px;
-    padding: 2px 12px;
-    font-size: 0.8rem;
-    margin-bottom: 12px;
-  }
+  a.btn.secondary { background: rgba(255,255,255,0.15); color: #fff; font-weight: 500; font-size: 1rem; }
+  .hint { font-size: 0.85rem; opacity: 0.8; margin-top: 22px; }
 </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="box">
+    <h1>📄 Эссе: команды Claude Code</h1>
+    <p>Нажмите кнопку, чтобы сохранить файл на телефон.</p>
 
-<header class="hero">
-  <h1>Команды и инструменты Claude Code</h1>
-  <p>Эссе о том, что я умею: какие инструменты и команды доступны и что каждый из них выполняет.</p>
-</header>
+    <a class="btn" href="essay.html" download="essay-claude-code.html">⬇️ Скачать файл</a>
+    <a class="btn secondary" href="essay.html">👁️ Просто посмотреть (без скачивания)</a>
 
-<div class="toc">
-  <strong>Содержание</strong>
-  <ol>
-    <li><a href="#intro">Что такое Claude Code</a></li>
-    <li><a href="#files">Работа с файлами</a></li>
-    <li><a href="#shell">Выполнение команд (Bash)</a></li>
-    <li><a href="#search">Поиск и исследование кода</a></li>
-    <li><a href="#agents">Подагенты (Agent)</a></li>
-    <li><a href="#interaction">Взаимодействие с пользователем</a></li>
-    <li><a href="#scheduling">Планирование и фоновые задачи</a></li>
-    <li><a href="#skills">Навыки (Skills) и слэш-команды</a></li>
-    <li><a href="#memory">Память</a></li>
-    <li><a href="#conclusion">Заключение</a></li>
-  </ol>
-</div>
-
-<section id="intro">
-<h2>1. Что такое Claude Code</h2>
-<div class="card">
-<p>Claude Code — это официальный интерактивный инструмент командной строки (CLI) от Anthropic. По сути это агент, который помогает решать задачи по разработке программного обеспечения: читать и писать код, запускать команды, искать по проекту, автоматизировать рутину и многое другое.</p>
-<p>Главная особенность — у меня есть набор «инструментов» (tools). Каждый инструмент выполняет одно конкретное действие: прочитать файл, выполнить команду в терминале, найти текст, запустить подагента и так далее. Ниже я подробно разбираю каждый из них.</p>
-</div>
-</section>
-
-<section id="files">
-<h2>2. Работа с файлами</h2>
-<p class="muted">Эти инструменты позволяют мне читать, создавать и изменять файлы на вашем компьютере.</p>
-
-<h3>Read — чтение файла</h3>
-<div class="card">
-<p>Читает файл из файловой системы по абсолютному пути. Возвращает содержимое с номерами строк. Умеет работать не только с текстом:</p>
-<ul>
-  <li>читает изображения (PNG, JPG и т.д.) и показывает их визуально;</li>
-  <li>читает PDF постранично;</li>
-  <li>читает Jupyter-блокноты (<code>.ipynb</code>) вместе с выводом ячеек.</li>
-</ul>
-<p>По умолчанию читает до 2000 строк, но можно указать конкретный диапазон, если файл большой.</p>
-</div>
-
-<h3>Write — создание/перезапись файла</h3>
-<div class="card">
-<p>Записывает файл в файловую систему. Если файл уже существует — перезаписывает его целиком. Используется для создания нового файла или полной замены содержимого. Кстати, именно этим инструментом создан тот документ, который вы сейчас читаете.</p>
-</div>
-
-<h3>Edit — точечное редактирование</h3>
-<div class="card">
-<p>Делает точную замену строки в файле: находит фрагмент <code>old_string</code> и заменяет его на <code>new_string</code>. Подходит для частичных изменений, когда не нужно переписывать весь файл. Перед редактированием файл обязательно нужно прочитать. Есть режим <code>replace_all</code> — заменить сразу все вхождения.</p>
-</div>
-
-<h3>NotebookEdit — редактирование Jupyter-блокнотов</h3>
-<div class="card">
-<p>Специальный инструмент для работы с ячейками Jupyter-блокнотов: позволяет менять, добавлять или удалять отдельные ячейки.</p>
-</div>
-</section>
-
-<section id="shell">
-<h2>3. Выполнение команд (Bash)</h2>
-
-<h3>Bash — запуск команд в терминале</h3>
-<div class="card">
-<p>Выполняет команду в оболочке bash и возвращает её вывод. Это один из самых мощных инструментов. Что важно знать:</p>
-<ul>
-  <li>рабочая директория сохраняется между вызовами;</li>
-  <li>есть таймаут (по умолчанию 2 минуты, максимум 10 минут);</li>
-  <li>команды можно запускать в фоне (<code>run_in_background</code>) — они продолжают работать между ходами;</li>
-  <li>для работы с Git и GitHub используется этот же инструмент (через <code>git</code> и <code>gh</code>).</li>
-</ul>
-<p>При этом для чтения файлов и поиска я предпочитаю специальные инструменты (Read, Grep и др.), а не <code>cat</code> или <code>grep</code> через Bash — так удобнее и надёжнее.</p>
-</div>
-</section>
-
-<section id="search">
-<h2>4. Поиск и исследование кода</h2>
-
-<h3>ToolSearch — поиск инструментов</h3>
-<div class="card">
-<p>Часть инструментов загружается «отложенно» — известно только их имя, но не описание параметров. ToolSearch по запросу подгружает полные схемы нужных инструментов, чтобы их можно было вызвать. Например, чтобы воспользоваться веб-поиском или планировщиком задач, я сначала нахожу их через ToolSearch.</p>
-</div>
-
-<h3>WebFetch и WebSearch — работа с интернетом</h3>
-<div class="card">
-<p><strong>WebSearch</strong> — поиск в интернете по запросу. <strong>WebFetch</strong> — загрузка содержимого конкретной веб-страницы по URL. Вместе они дают доступ к актуальной информации, документации и материалам, которых нет в моих «знаниях».</p>
-</div>
-</section>
-
-<section id="agents">
-<h2>5. Подагенты (Agent)</h2>
-
-<h3>Agent — запуск специализированного агента</h3>
-<div class="card">
-<p>Позволяет запустить отдельного агента для сложных многошаговых задач. У каждого типа агента свой набор доступных инструментов и своя специализация. Основные типы:</p>
-<ul>
-  <li><strong>general-purpose</strong> — универсальный агент для исследования сложных вопросов и поиска кода;</li>
-  <li><strong>Explore</strong> — агент только для чтения, для широкого поиска по множеству файлов;</li>
-  <li><strong>Plan</strong> — агент-архитектор для составления планов реализации;</li>
-  <li><strong>claude-code-guide</strong> — отвечает на вопросы о самом Claude Code, Agent SDK и Claude API;</li>
-  <li><strong>statusline-setup</strong> — настройка строки статуса;</li>
-  <li>набор агентов <strong>vercel:*</strong> — специалисты по деплою, производительности и архитектуре AI-приложений на Vercel.</li>
-</ul>
-<p>Агент можно запустить в фоне или в изолированной копии репозитория (git worktree). Важная деталь: запуск нового агента — «дорогая» операция, поэтому без явной просьбы я стараюсь делать задачи сам.</p>
-</div>
-</section>
-
-<section id="interaction">
-<h2>6. Взаимодействие с пользователем</h2>
-
-<h3>AskUserQuestion — уточняющий вопрос</h3>
-<div class="card">
-<p>Используется, когда я застрял на решении, которое действительно за вами: его нельзя вывести из запроса, кода или разумных значений по умолчанию. Показывает вам варианты ответа на выбор (с возможностью добавить свой). Именно этим инструментом я уточнял у вас формат документа и его объём перед тем, как начать.</p>
-</div>
-
-<h3>EnterPlanMode / ExitPlanMode — режим планирования</h3>
-<div class="card">
-<p>Позволяют перейти в режим планирования (когда нужно сначала продумать стратегию, не меняя код) и выйти из него, представив готовый план на утверждение.</p>
-</div>
-</section>
-
-<section id="scheduling">
-<h2>7. Планирование и фоновые задачи</h2>
-
-<h3>ScheduleWakeup — отложенное возобновление</h3>
-<div class="card">
-<p>Планирует, когда мне «проснуться» и продолжить работу — используется в режиме <code>/loop</code>, когда задачу нужно выполнять самостоятельно с определённым ритмом. Например, периодически проверять состояние внешней задачи.</p>
-</div>
-
-<h3>Cron* — расписания (CronCreate, CronList, CronDelete)</h3>
-<div class="card">
-<p>Управление запланированными удалёнными агентами, которые выполняются по расписанию (cron): создание, просмотр списка и удаление. Подходит для повторяющихся автоматических задач.</p>
-</div>
-
-<h3>Task* — управление задачами (TaskCreate, TaskGet, TaskList, TaskOutput, TaskStop, TaskUpdate)</h3>
-<div class="card">
-<p>Набор инструментов для создания фоновых задач, получения их статуса и вывода, обновления и остановки. Позволяет запускать длительную работу и следить за её ходом.</p>
-</div>
-
-<h3>Monitor — ожидание условия</h3>
-<div class="card">
-<p>Используется, чтобы дождаться выполнения определённого условия (например, завершения процесса), не блокируя работу.</p>
-</div>
-
-<h3>EnterWorktree / ExitWorktree — изолированное рабочее дерево</h3>
-<div class="card">
-<p>Создаёт и закрывает отдельную копию git-репозитория (worktree), чтобы вносить изменения, не затрагивая основную ветку.</p>
-</div>
-
-<h3>PushNotification и RemoteTrigger</h3>
-<div class="card">
-<p><strong>PushNotification</strong> — отправка уведомлений. <strong>RemoteTrigger</strong> — запуск действий по внешнему событию. Это инструменты для интеграции с внешними системами.</p>
-</div>
-</section>
-
-<section id="skills">
-<h2>8. Навыки (Skills) и слэш-команды</h2>
-<p class="muted">Навыки вызываются командой вида <code>/имя-навыка</code>. Это специализированные сценарии со своими знаниями. Перечислю основные.</p>
-
-<h3>Встроенные команды разработки</h3>
-<div class="card">
-<ul>
-  <li><span class="cmd">/init</span> — создаёт файл <code>CLAUDE.md</code> с документацией по кодовой базе.</li>
-  <li><span class="cmd">/review</span> — ревью pull request'а.</li>
-  <li><span class="cmd">/code-review</span> — ревью текущих изменений на ошибки и упрощения; с уровнем <code>ultra</code> запускает глубокое многоагентное облачное ревью.</li>
-  <li><span class="cmd">/security-review</span> — проверка безопасности изменений в текущей ветке.</li>
-  <li><span class="cmd">/simplify</span> — упрощение и улучшение изменённого кода (без поиска багов).</li>
-  <li><span class="cmd">/verify</span> и <span class="cmd">/run</span> — запуск приложения, чтобы убедиться, что изменения реально работают.</li>
-  <li><span class="cmd">/loop</span> — запуск задачи по повторяющемуся интервалу.</li>
-  <li><span class="cmd">/schedule</span> — создание и управление запланированными удалёнными агентами.</li>
-  <li><span class="cmd">/claude-api</span> — помощь в создании и отладке приложений на Claude API / Anthropic SDK.</li>
-</ul>
-</div>
-
-<h3>Настройка окружения</h3>
-<div class="card">
-<ul>
-  <li><span class="cmd">/update-config</span> — настройка харнесса через <code>settings.json</code>: разрешения, переменные окружения, хуки (автоматические действия).</li>
-  <li><span class="cmd">/keybindings-help</span> — настройка горячих клавиш.</li>
-  <li><span class="cmd">/fewer-permission-prompts</span> — уменьшение числа запросов на подтверждение за счёт списка разрешённых команд.</li>
-  <li><span class="cmd">/statusline-setup</span> — настройка строки статуса.</li>
-</ul>
-</div>
-
-<h3>Экосистема Vercel</h3>
-<div class="card">
-<p>Большой набор навыков с префиксом <code>vercel:</code> для работы с платформой Vercel. Среди них:</p>
-<ul>
-  <li><strong>deploy, status, env</strong> — деплой, статус проекта и управление переменными окружения;</li>
-  <li><strong>ai-sdk, ai-gateway, chat-sdk</strong> — построение AI-функций, маршрутизация моделей, чат-боты;</li>
-  <li><strong>nextjs, next-forge, turbopack, shadcn</strong> — помощь по Next.js, монорепозиториям, бандлеру и UI-компонентам;</li>
-  <li><strong>vercel-firewall, vercel-functions, vercel-storage, vercel-sandbox</strong> — безопасность, серверные функции, хранилища, изолированный запуск кода;</li>
-  <li><strong>workflow, marketplace, auth</strong> — устойчивые рабочие процессы, интеграции, аутентификация.</li>
-</ul>
-</div>
-</section>
-
-<section id="memory">
-<h2>9. Память</h2>
-<div class="card">
-<p>У меня есть постоянная файловая память. В ней я сохраняю отдельными файлами важные факты: кто вы (роль, предпочтения), обратную связь о том, как мне лучше работать, контекст текущих проектов и ссылки на внешние ресурсы. Это помогает не терять важные детали между сессиями. При этом я не дублирую то, что и так есть в коде или истории Git.</p>
-</div>
-</section>
-
-<section id="conclusion">
-<h2>10. Заключение</h2>
-<div class="card">
-<p>Набор инструментов Claude Code построен вокруг простой идеи: каждое действие — это отдельный, предсказуемый инструмент. Чтение и запись файлов, выполнение команд, поиск, веб-доступ, подагенты, планирование задач, навыки и память вместе превращают меня из «чат-бота» в полноценного агента, способного выполнять реальную работу по разработке от начала до конца — исследовать проект, вносить изменения, проверять результат и автоматизировать рутину.</p>
-<p class="muted">Документ подготовлен Claude Code, 1 июня 2026 года.</p>
-</div>
-</section>
-
-<footer>
-  Сгенерировано Claude Code · Anthropic
-</footer>
-
-</div>
+    <div class="hint">
+      Если после нажатия файл просто открылся — нажмите «Поделиться» → «Сохранить в Файлы» (iPhone)
+      или меню ⋮ → «Скачать» (Android).
+    </div>
+  </div>
 </body>
 </html>
