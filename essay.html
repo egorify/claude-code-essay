@@ -3,299 +3,746 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Эссе: команды и инструменты Claude Code</title>
+<title>Всё о Claude Code — для чайника</title>
 <style>
   :root {
-    --bg: #f7f7f5;
+    --bg: #f4f4f2;
     --card: #ffffff;
-    --text: #2b2b2b;
-    --muted: #6b6b6b;
+    --text: #1e1e1e;
+    --muted: #666;
     --accent: #c15f3c;
     --accent-soft: #f3e4dd;
-    --border: #e3e3df;
-    --code-bg: #2b2b2b;
+    --accent2: #3c7dc1;
+    --accent2-soft: #ddeaf3;
+    --green: #2e7d32;
+    --green-soft: #e8f5e9;
+    --border: #ddd;
+    --code-bg: #1e1e1e;
     --code-text: #f1f1ee;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    margin: 0;
     font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.7;
+    line-height: 1.75;
   }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
+
+  /* HERO */
   header.hero {
-    background: linear-gradient(135deg, var(--accent), #a84e30);
+    background: linear-gradient(135deg, #c15f3c 0%, #a84e30 50%, #3c7dc1 100%);
     color: #fff;
-    border-radius: 18px;
-    padding: 44px 40px;
-    margin-bottom: 40px;
-    box-shadow: 0 12px 30px rgba(193,95,60,0.25);
+    border-radius: 20px;
+    padding: 52px 44px;
+    margin-bottom: 44px;
+    box-shadow: 0 16px 40px rgba(193,95,60,0.3);
   }
-  header.hero h1 { margin: 0 0 10px; font-size: 2rem; line-height: 1.25; }
-  header.hero p { margin: 0; opacity: 0.92; font-size: 1.05rem; }
+  header.hero .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    padding: 4px 16px;
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  header.hero h1 { font-size: 2.2rem; line-height: 1.2; margin-bottom: 14px; }
+  header.hero p { opacity: 0.93; font-size: 1.1rem; max-width: 620px; }
+
+  /* TOC */
+  .toc {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 30px;
+    margin-bottom: 44px;
+  }
+  .toc strong { font-size: 1rem; }
+  .toc ol { margin: 12px 0 0 18px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: var(--accent); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  /* SECTIONS */
   h2 {
-    font-size: 1.45rem;
-    margin: 44px 0 8px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--accent-soft);
+    font-size: 1.55rem;
+    margin: 52px 0 10px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent-soft);
   }
-  h3 { font-size: 1.1rem; margin: 28px 0 6px; color: var(--accent); }
+  h2 .num { color: var(--accent); margin-right: 8px; }
+  h3 { font-size: 1.12rem; margin: 30px 0 8px; color: var(--accent); }
   p { margin: 10px 0; }
-  .muted { color: var(--muted); }
+  .muted { color: var(--muted); font-size: 0.95rem; margin-bottom: 4px; }
+
+  /* CARDS */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 22px 26px;
-    margin: 18px 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    padding: 22px 28px;
+    margin: 14px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   }
-  code, .cmd {
-    font-family: "SF Mono", "JetBrains Mono", Consolas, monospace;
+  .card.blue { border-left: 4px solid var(--accent2); background: var(--accent2-soft); }
+  .card.green { border-left: 4px solid var(--green); background: var(--green-soft); }
+  .card.orange { border-left: 4px solid var(--accent); background: var(--accent-soft); }
+
+  /* CODE */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 12px;
+    padding: 18px 22px;
+    overflow-x: auto;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 14px 0;
+    font-family: "SF Mono","JetBrains Mono",Consolas,monospace;
+  }
+  code {
+    font-family: "SF Mono","JetBrains Mono",Consolas,monospace;
     background: var(--accent-soft);
     color: #8a3c20;
-    padding: 1px 7px;
+    padding: 2px 8px;
     border-radius: 6px;
-    font-size: 0.92em;
+    font-size: 0.9em;
   }
-  ul { padding-left: 22px; }
-  li { margin: 6px 0; }
-  .toc { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 26px; }
-  .toc ol { margin: 6px 0 0; padding-left: 20px; }
-  .toc a { color: var(--accent); text-decoration: none; }
-  .toc a:hover { text-decoration: underline; }
-  footer { margin-top: 50px; color: var(--muted); font-size: 0.9rem; text-align: center; }
+  pre code { background: none; color: inherit; padding: 0; border-radius: 0; font-size: inherit; }
+
+  /* LISTS */
+  ul, ol { padding-left: 22px; }
+  li { margin: 7px 0; }
+
+  /* CMD BADGE */
+  .cmd {
+    display: inline-block;
+    font-family: "SF Mono","JetBrains Mono",Consolas,monospace;
+    background: #1e1e1e;
+    color: #7ec8a0;
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 0.88em;
+    margin: 2px 0;
+  }
   .tag {
     display: inline-block;
     background: var(--accent-soft);
     color: #8a3c20;
     border-radius: 999px;
-    padding: 2px 12px;
+    padding: 3px 14px;
     font-size: 0.8rem;
-    margin-bottom: 12px;
+    margin: 2px 4px 2px 0;
+    font-weight: 600;
   }
+  .tag.blue { background: var(--accent2-soft); color: #1e4f8a; }
+  .tag.green { background: var(--green-soft); color: #1b5e20; }
+
+  /* EXAMPLE BLOCK */
+  .example {
+    border-left: 3px solid var(--accent);
+    padding: 14px 20px;
+    background: #fff8f5;
+    border-radius: 0 10px 10px 0;
+    margin: 14px 0;
+    font-size: 0.97rem;
+  }
+  .example .label { font-size: 0.78rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+
+  /* GRID */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+  @media(max-width: 600px) { .grid2 { grid-template-columns: 1fr; } header.hero { padding: 36px 24px; } }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.95rem; }
+  th { background: var(--accent-soft); color: #6b2a10; text-align: left; padding: 10px 14px; }
+  td { border-bottom: 1px solid var(--border); padding: 10px 14px; }
+  tr:last-child td { border-bottom: none; }
+
+  /* FOOTER */
+  footer { margin-top: 60px; color: var(--muted); font-size: 0.88rem; text-align: center; padding-top: 24px; border-top: 1px solid var(--border); }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+<!-- HERO -->
 <header class="hero">
-  <h1>Команды и инструменты Claude Code</h1>
-  <p>Эссе о том, что я умею: какие инструменты и команды доступны и что каждый из них выполняет.</p>
+  <div class="badge">Для чайника · Полное руководство</div>
+  <h1>Всё, что умеет Claude Code</h1>
+  <p>Полное руководство для новичка: каждая команда, каждый инструмент, реальные примеры. Я — Claude, ИИ-ассистент от Anthropic. Давайте разберёмся, на что я способен.</p>
 </header>
 
+<!-- TOC -->
 <div class="toc">
   <strong>Содержание</strong>
   <ol>
-    <li><a href="#intro">Что такое Claude Code</a></li>
-    <li><a href="#files">Работа с файлами</a></li>
-    <li><a href="#shell">Выполнение команд (Bash)</a></li>
-    <li><a href="#search">Поиск и исследование кода</a></li>
-    <li><a href="#agents">Подагенты (Agent)</a></li>
-    <li><a href="#interaction">Взаимодействие с пользователем</a></li>
-    <li><a href="#scheduling">Планирование и фоновые задачи</a></li>
-    <li><a href="#skills">Навыки (Skills) и слэш-команды</a></li>
-    <li><a href="#memory">Память</a></li>
-    <li><a href="#conclusion">Заключение</a></li>
+    <li><a href="#whatis">Что такое Claude Code и как он работает</a></li>
+    <li><a href="#files">Работа с файлами: Read, Write, Edit</a></li>
+    <li><a href="#bash">Выполнение команд в терминале (Bash)</a></li>
+    <li><a href="#search">Поиск: Grep, Glob</a></li>
+    <li><a href="#web">Интернет: WebSearch, WebFetch</a></li>
+    <li><a href="#agents">Подагенты — когда задача слишком большая</a></li>
+    <li><a href="#git">Git и GitHub</a></li>
+    <li><a href="#tasks">Фоновые задачи и расписание</a></li>
+    <li><a href="#skills">Навыки и слэш-команды</a></li>
+    <li><a href="#memory">Память между сессиями</a></li>
+    <li><a href="#vercel">Экосистема Vercel</a></li>
+    <li><a href="#security">Безопасность и ограничения</a></li>
+    <li><a href="#examples">Реальные примеры из жизни</a></li>
+    <li><a href="#conclusion">Итог</a></li>
   </ol>
 </div>
 
-<section id="intro">
-<h2>1. Что такое Claude Code</h2>
+<!-- 1 -->
+<section id="whatis">
+<h2><span class="num">1.</span>Что такое Claude Code и как он работает</h2>
 <div class="card">
-<p>Claude Code — это официальный интерактивный инструмент командной строки (CLI) от Anthropic. По сути это агент, который помогает решать задачи по разработке программного обеспечения: читать и писать код, запускать команды, искать по проекту, автоматизировать рутину и многое другое.</p>
-<p>Главная особенность — у меня есть набор «инструментов» (tools). Каждый инструмент выполняет одно конкретное действие: прочитать файл, выполнить команду в терминале, найти текст, запустить подагента и так далее. Ниже я подробно разбираю каждый из них.</p>
+  <p>Claude Code — это официальный инструмент от Anthropic, который позволяет общаться со мной (Claude) прямо в терминале вашего компьютера, в IDE (VS Code, JetBrains) или через веб-интерфейс.</p>
+  <p>Главное отличие от обычного чата: у меня есть <strong>инструменты (tools)</strong> — специальные функции, которые дают мне возможность реально работать с вашим компьютером. Я не просто отвечаю текстом, а могу:</p>
+  <ul>
+    <li>Читать и редактировать файлы на вашем диске</li>
+    <li>Запускать команды в терминале</li>
+    <li>Искать по коду и интернету</li>
+    <li>Работать с Git и GitHub</li>
+    <li>Запускать другие AI-агенты для сложных задач</li>
+    <li>Запоминать информацию между разговорами</li>
+  </ul>
+</div>
+
+<div class="card blue">
+  <p><strong>Как это выглядит на практике?</strong> Вы пишете: <em>"Найди все баги в моём коде и исправь их"</em> — и я самостоятельно открываю файлы, анализирую, вношу правки, запускаю тесты. Без копирования и вставки — всё происходит прямо в вашем проекте.</p>
+</div>
+
+<h3>Модели, на которых я работаю</h3>
+<div class="card">
+  <table>
+    <tr><th>Модель</th><th>ID</th><th>Когда использовать</th></tr>
+    <tr><td>Claude Opus 4.8</td><td><code>claude-opus-4-8</code></td><td>Самые сложные задачи, глубокий анализ</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td><code>claude-sonnet-4-6</code></td><td>Баланс скорости и качества (по умолчанию)</td></tr>
+    <tr><td>Claude Haiku 4.5</td><td><code>claude-haiku-4-5</code></td><td>Быстрые простые задачи, дешевле</td></tr>
+  </table>
 </div>
 </section>
 
+<!-- 2 -->
 <section id="files">
-<h2>2. Работа с файлами</h2>
-<p class="muted">Эти инструменты позволяют мне читать, создавать и изменять файлы на вашем компьютере.</p>
+<h2><span class="num">2.</span>Работа с файлами: Read, Write, Edit</h2>
+<p class="muted">Это основа всего. Именно через файлы я взаимодействую с вашим проектом.</p>
 
-<h3>Read — чтение файла</h3>
+<h3>Read — прочитать файл</h3>
 <div class="card">
-<p>Читает файл из файловой системы по абсолютному пути. Возвращает содержимое с номерами строк. Умеет работать не только с текстом:</p>
-<ul>
-  <li>читает изображения (PNG, JPG и т.д.) и показывает их визуально;</li>
-  <li>читает PDF постранично;</li>
-  <li>читает Jupyter-блокноты (<code>.ipynb</code>) вместе с выводом ячеек.</li>
-</ul>
-<p>По умолчанию читает до 2000 строк, но можно указать конкретный диапазон, если файл большой.</p>
+  <p>Открывает любой файл на вашем компьютере и показывает мне его содержимое с номерами строк. Я могу читать:</p>
+  <ul>
+    <li>Любые текстовые файлы: <code>.py</code>, <code>.js</code>, <code>.html</code>, <code>.json</code>, <code>.md</code> и т.д.</li>
+    <li>Картинки (PNG, JPG, WebP) — вижу изображения визуально</li>
+    <li>PDF-файлы — постранично (до 20 страниц за раз)</li>
+    <li>Jupyter-блокноты <code>.ipynb</code> — вместе с результатами выполнения ячеек</li>
+  </ul>
+</div>
+<div class="example">
+  <div class="label">Пример использования</div>
+  <p>Вы: <em>"Посмотри, что не так в файле app.py"</em><br>
+  Я читаю <code>/home/user/project/app.py</code>, нахожу ошибку в строке 42 и объясняю проблему.</p>
 </div>
 
-<h3>Write — создание/перезапись файла</h3>
+<h3>Write — создать или полностью перезаписать файл</h3>
 <div class="card">
-<p>Записывает файл в файловую систему. Если файл уже существует — перезаписывает его целиком. Используется для создания нового файла или полной замены содержимого. Кстати, именно этим инструментом создан тот документ, который вы сейчас читаете.</p>
+  <p>Создаёт новый файл или полностью заменяет содержимое существующего. Именно этот инструмент я использую, чтобы создать новый проект с нуля — написать все файлы конфигурации, исходный код, README.</p>
+  <p><strong>Важно:</strong> перед перезаписью существующего файла я сначала его читаю — чтобы случайно не потерять ваши данные.</p>
+</div>
+<div class="example">
+  <div class="label">Пример</div>
+  <p>Вы: <em>"Создай React-компонент кнопки"</em><br>
+  Я создаю файл <code>Button.tsx</code> с полным кодом компонента, пропсами, стилями.</p>
 </div>
 
-<h3>Edit — точечное редактирование</h3>
+<h3>Edit — точечная правка без переписывания</h3>
 <div class="card">
-<p>Делает точную замену строки в файле: находит фрагмент <code>old_string</code> и заменяет его на <code>new_string</code>. Подходит для частичных изменений, когда не нужно переписывать весь файл. Перед редактированием файл обязательно нужно прочитать. Есть режим <code>replace_all</code> — заменить сразу все вхождения.</p>
+  <p>Находит конкретный фрагмент текста в файле и заменяет его на новый. Это как <kbd>Ctrl+H</kbd> (найти и заменить), только умный — я понимаю контекст и делаю минимальные изменения.</p>
+  <ul>
+    <li>Обычная замена: меняет первое вхождение</li>
+    <li>Режим <code>replace_all</code>: заменяет все вхождения (удобно для переименования переменной)</li>
+  </ul>
+</div>
+<div class="example">
+  <div class="label">Пример</div>
+  <p>Вы: <em>"Переименуй функцию getUser в fetchUser во всём файле"</em><br>
+  Я нахожу все <code>getUser</code> и меняю на <code>fetchUser</code> — только в нужном файле, без риска задеть другие.</p>
 </div>
 
-<h3>NotebookEdit — редактирование Jupyter-блокнотов</h3>
-<div class="card">
-<p>Специальный инструмент для работы с ячейками Jupyter-блокнотов: позволяет менять, добавлять или удалять отдельные ячейки.</p>
+<div class="card green">
+  <strong>Совет чайнику:</strong> Вам не нужно ничего копировать или вставлять. Просто скажите мне что изменить — я сам найду файл, внесу правку и покажу результат.
 </div>
 </section>
 
-<section id="shell">
-<h2>3. Выполнение команд (Bash)</h2>
+<!-- 3 -->
+<section id="bash">
+<h2><span class="num">3.</span>Выполнение команд в терминале (Bash)</h2>
 
-<h3>Bash — запуск команд в терминале</h3>
+<h3>Bash — запустить любую команду</h3>
 <div class="card">
-<p>Выполняет команду в оболочке bash и возвращает её вывод. Это один из самых мощных инструментов. Что важно знать:</p>
-<ul>
-  <li>рабочая директория сохраняется между вызовами;</li>
-  <li>есть таймаут (по умолчанию 2 минуты, максимум 10 минут);</li>
-  <li>команды можно запускать в фоне (<code>run_in_background</code>) — они продолжают работать между ходами;</li>
-  <li>для работы с Git и GitHub используется этот же инструмент (через <code>git</code> и <code>gh</code>).</li>
-</ul>
-<p>При этом для чтения файлов и поиска я предпочитаю специальные инструменты (Read, Grep и др.), а не <code>cat</code> или <code>grep</code> через Bash — так удобнее и надёжнее.</p>
+  <p>Выполняет команды в терминале и возвращает мне вывод. Это даёт мне возможность делать практически всё, что можно сделать в командной строке.</p>
+  <p><strong>Что я умею через Bash:</strong></p>
+  <ul>
+    <li>Устанавливать зависимости: <code>npm install</code>, <code>pip install</code>, <code>cargo add</code></li>
+    <li>Запускать тесты: <code>pytest</code>, <code>jest</code>, <code>go test ./...</code></li>
+    <li>Собирать проект: <code>npm run build</code>, <code>cargo build</code></li>
+    <li>Работать с базой данных, Docker, облачными сервисами</li>
+    <li>Запускать скрипты в фоне и наблюдать за выводом</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="label">Пример 1: Установить и запустить</div>
+  <pre><code># Вы: "Установи все зависимости и запусти проект"
+npm install
+npm run dev
+# Я вижу вывод, сообщаю вам что всё запустилось (или где ошибка)</code></pre>
+</div>
+
+<div class="example">
+  <div class="label">Пример 2: Запуск в фоне</div>
+  <p>Я могу запустить длительную команду в фоне (например, dev-сервер) и продолжить с вами разговор, пока она работает. Когда она завершится — получу уведомление.</p>
+</div>
+
+<div class="card orange">
+  <strong>Таймаут:</strong> Обычная команда работает до 2 минут. Если нужно больше — я ставлю таймаут до 10 минут. Очень долгие задачи запускаю в фоне.
 </div>
 </section>
 
+<!-- 4 -->
 <section id="search">
-<h2>4. Поиск и исследование кода</h2>
+<h2><span class="num">4.</span>Поиск: Grep и Glob</h2>
 
-<h3>ToolSearch — поиск инструментов</h3>
+<h3>Grep — поиск текста в файлах</h3>
 <div class="card">
-<p>Часть инструментов загружается «отложенно» — известно только их имя, но не описание параметров. ToolSearch по запросу подгружает полные схемы нужных инструментов, чтобы их можно было вызвать. Например, чтобы воспользоваться веб-поиском или планировщиком задач, я сначала нахожу их через ToolSearch.</p>
+  <p>Ищет текст или регулярное выражение по содержимому файлов. Намного мощнее, чем <kbd>Ctrl+F</kbd> в редакторе — ищет сразу по всему проекту.</p>
+  <ul>
+    <li>Поддерживает регулярные выражения</li>
+    <li>Можно фильтровать по типу файлов (<code>*.py</code>, <code>*.ts</code>)</li>
+    <li>Показывает строки с контекстом вокруг</li>
+    <li>Умеет искать без учёта регистра</li>
+  </ul>
+</div>
+<div class="example">
+  <div class="label">Пример</div>
+  <p>Вы: <em>"Где в проекте используется функция sendEmail?"</em><br>
+  Я ищу <code>sendEmail</code> по всем <code>.py</code> файлам и показываю вам все места с номерами строк.</p>
 </div>
 
-<h3>WebFetch и WebSearch — работа с интернетом</h3>
+<h3>Glob — поиск файлов по имени</h3>
 <div class="card">
-<p><strong>WebSearch</strong> — поиск в интернете по запросу. <strong>WebFetch</strong> — загрузка содержимого конкретной веб-страницы по URL. Вместе они дают доступ к актуальной информации, документации и материалам, которых нет в моих «знаниях».</p>
+  <p>Находит файлы по шаблону имени. Работает на любой размер проекта, результаты отсортированы по дате изменения.</p>
+</div>
+<div class="example">
+  <div class="label">Примеры шаблонов</div>
+  <pre><code>src/**/*.tsx        — все TypeScript React-файлы в папке src
+**/*.test.js        — все тестовые файлы
+config/*.{json,yaml} — все конфиги в папке config</code></pre>
 </div>
 </section>
 
+<!-- 5 -->
+<section id="web">
+<h2><span class="num">5.</span>Интернет: WebSearch и WebFetch</h2>
+
+<h3>WebSearch — поиск в интернете</h3>
+<div class="card">
+  <p>Ищет актуальную информацию в интернете. Это важно, потому что мои знания имеют дату отсечения (август 2025), а интернет — живой. Я использую поиск когда нужно:</p>
+  <ul>
+    <li>Найти актуальную документацию по библиотеке</li>
+    <li>Проверить последнюю версию пакета</li>
+    <li>Найти решение конкретной ошибки</li>
+    <li>Изучить новую технологию</li>
+  </ul>
+</div>
+
+<h3>WebFetch — загрузить конкретную страницу</h3>
+<div class="card">
+  <p>Открывает URL и читает его содержимое. Конвертирует HTML в текст для удобства. Работает с публичными страницами (не требующими входа).</p>
+</div>
+<div class="example">
+  <div class="label">Пример</div>
+  <p>Вы: <em>"Посмотри документацию React Router v7 и напиши мне пример роутинга"</em><br>
+  Я загружаю страницу документации, читаю актуальные API, пишу рабочий пример.</p>
+</div>
+
+<div class="card orange">
+  <strong>Ограничение:</strong> WebFetch не работает с приватными страницами (Google Docs, Confluence, закрытые GitHub-репозитории). Для них нужны специальные интеграции.
+</div>
+</section>
+
+<!-- 6 -->
 <section id="agents">
-<h2>5. Подагенты (Agent)</h2>
+<h2><span class="num">6.</span>Подагенты — когда задача слишком большая</h2>
 
-<h3>Agent — запуск специализированного агента</h3>
+<h3>Agent — запустить специализированного помощника</h3>
 <div class="card">
-<p>Позволяет запустить отдельного агента для сложных многошаговых задач. У каждого типа агента свой набор доступных инструментов и своя специализация. Основные типы:</p>
-<ul>
-  <li><strong>general-purpose</strong> — универсальный агент для исследования сложных вопросов и поиска кода;</li>
-  <li><strong>Explore</strong> — агент только для чтения, для широкого поиска по множеству файлов;</li>
-  <li><strong>Plan</strong> — агент-архитектор для составления планов реализации;</li>
-  <li><strong>claude-code-guide</strong> — отвечает на вопросы о самом Claude Code, Agent SDK и Claude API;</li>
-  <li><strong>statusline-setup</strong> — настройка строки статуса;</li>
-  <li>набор агентов <strong>vercel:*</strong> — специалисты по деплою, производительности и архитектуре AI-приложений на Vercel.</li>
-</ul>
-<p>Агент можно запустить в фоне или в изолированной копии репозитория (git worktree). Важная деталь: запуск нового агента — «дорогая» операция, поэтому без явной просьбы я стараюсь делать задачи сам.</p>
+  <p>Когда задача слишком большая или требует параллельной работы, я могу запустить одного или нескольких подагентов. Каждый — это отдельный Claude с конкретной специализацией. Они работают независимо и возвращают мне результат.</p>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <strong>Explore</strong>
+    <p class="muted">Быстрый агент только для чтения. Ищет по большой кодовой базе, находит файлы и символы.</p>
+  </div>
+  <div class="card">
+    <strong>Plan</strong>
+    <p class="muted">Агент-архитектор. Анализирует задачу, предлагает стратегию, выявляет риски.</p>
+  </div>
+  <div class="card">
+    <strong>general-purpose</strong>
+    <p class="muted">Универсальный агент для исследования сложных вопросов и многошаговых задач.</p>
+  </div>
+  <div class="card">
+    <strong>vercel:*</strong>
+    <p class="muted">Специалисты по деплою, производительности, AI-архитектуре на платформе Vercel.</p>
+  </div>
+</div>
+
+<div class="example">
+  <div class="label">Когда я запускаю подагентов</div>
+  <p>Вы: <em>"Проверь весь проект на проблемы с безопасностью"</em><br>
+  Я запускаю Explore-агента для поиска по всем файлам, параллельно — агента для проверки зависимостей. Это быстрее, чем делать всё последовательно самому.</p>
+</div>
+
+<div class="card blue">
+  <strong>Важно для чайника:</strong> Подагенты запускаются <em>от вашего имени</em> и имеют те же права. Я не использую их без необходимости — запуск агента это дорогая операция, поэтому стараюсь делать задачи сам.
 </div>
 </section>
 
-<section id="interaction">
-<h2>6. Взаимодействие с пользователем</h2>
-
-<h3>AskUserQuestion — уточняющий вопрос</h3>
+<!-- 7 -->
+<section id="git">
+<h2><span class="num">7.</span>Git и GitHub</h2>
 <div class="card">
-<p>Используется, когда я застрял на решении, которое действительно за вами: его нельзя вывести из запроса, кода или разумных значений по умолчанию. Показывает вам варианты ответа на выбор (с возможностью добавить свой). Именно этим инструментом я уточнял у вас формат документа и его объём перед тем, как начать.</p>
+  <p>Я умею полноценно работать с Git и GitHub через командную строку. Это одна из моих самых частых задач.</p>
 </div>
 
-<h3>EnterPlanMode / ExitPlanMode — режим планирования</h3>
+<h3>Что я умею с Git</h3>
 <div class="card">
-<p>Позволяют перейти в режим планирования (когда нужно сначала продумать стратегию, не меняя код) и выйти из него, представив готовый план на утверждение.</p>
+  <ul>
+    <li>Смотреть статус, историю, разницу: <code>git status</code>, <code>git log</code>, <code>git diff</code></li>
+    <li>Создавать ветки, переключаться, мерджить</li>
+    <li>Делать коммиты с осмысленными сообщениями</li>
+    <li>Разрешать конфликты слияния</li>
+    <li>Работать с тегами и релизами</li>
+  </ul>
+</div>
+
+<h3>Что я умею с GitHub (через gh CLI)</h3>
+<div class="card">
+  <ul>
+    <li>Создавать Pull Request с описанием и чеклистом тестирования</li>
+    <li>Просматривать и комментировать PR и Issues</li>
+    <li>Читать содержимое репозитория через API</li>
+    <li>Работать с GitHub Actions и релизами</li>
+    <li>Изменять файлы прямо в репозитории (именно так обновлено это эссе)</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="label">Пример: как я обновил это эссе</div>
+  <pre><code># 1. Получил текущий файл через GitHub API
+gh api repos/egorify/claude-code-essay/contents/essay.html
+
+# 2. Написал новый HTML
+
+# 3. Закодировал в base64 и отправил через API
+gh api repos/.../contents/essay.html \
+  --method PUT \
+  --field message="Update essay" \
+  --field content="$(base64 новый_файл.html)"</code></pre>
+</div>
+
+<div class="card orange">
+  <strong>Безопасность:</strong> Деструктивные команды (force push, reset --hard, удаление веток) я никогда не делаю без явного разрешения. Спрошу прежде чем что-то необратимое.
 </div>
 </section>
 
-<section id="scheduling">
-<h2>7. Планирование и фоновые задачи</h2>
+<!-- 8 -->
+<section id="tasks">
+<h2><span class="num">8.</span>Фоновые задачи и расписание</h2>
 
-<h3>ScheduleWakeup — отложенное возобновление</h3>
+<h3>TaskCreate / TaskUpdate / TaskList — управление задачами</h3>
 <div class="card">
-<p>Планирует, когда мне «проснуться» и продолжить работу — используется в режиме <code>/loop</code>, когда задачу нужно выполнять самостоятельно с определённым ритмом. Например, периодически проверять состояние внешней задачи.</p>
+  <p>Для больших задач я разбиваю работу на шаги и отслеживаю прогресс. Это помогает не потерять нить при долгой работе.</p>
+  <ul>
+    <li><strong>TaskCreate</strong> — создать задачу с описанием</li>
+    <li><strong>TaskUpdate</strong> — обновить статус (in_progress → completed)</li>
+    <li><strong>TaskList</strong> — посмотреть все задачи</li>
+    <li><strong>TaskOutput</strong> — получить вывод задачи</li>
+    <li><strong>TaskStop</strong> — остановить задачу</li>
+  </ul>
 </div>
 
-<h3>Cron* — расписания (CronCreate, CronList, CronDelete)</h3>
+<h3>CronCreate / CronList / CronDelete — расписание</h3>
 <div class="card">
-<p>Управление запланированными удалёнными агентами, которые выполняются по расписанию (cron): создание, просмотр списка и удаление. Подходит для повторяющихся автоматических задач.</p>
+  <p>Позволяет создавать повторяющиеся задачи по расписанию (cron). Например: каждый день в 9:00 проверять обновления зависимостей и присылать отчёт.</p>
 </div>
 
-<h3>Task* — управление задачами (TaskCreate, TaskGet, TaskList, TaskOutput, TaskStop, TaskUpdate)</h3>
+<h3>ScheduleWakeup — отложенное действие</h3>
 <div class="card">
-<p>Набор инструментов для создания фоновых задач, получения их статуса и вывода, обновления и остановки. Позволяет запускать длительную работу и следить за её ходом.</p>
+  <p>В режиме <code>/loop</code> я могу сам решать, когда "проснуться" и продолжить работу. Например, запустил деплой, жду 5 минут, проверяю статус.</p>
 </div>
 
-<h3>Monitor — ожидание условия</h3>
+<h3>Monitor — ждать события</h3>
 <div class="card">
-<p>Используется, чтобы дождаться выполнения определённого условия (например, завершения процесса), не блокируя работу.</p>
+  <p>Следит за выводом запущенного процесса и уведомляет меня, когда что-то важное произошло (например, сервер запустился или тест упал).</p>
 </div>
 
-<h3>EnterWorktree / ExitWorktree — изолированное рабочее дерево</h3>
+<h3>EnterWorktree / ExitWorktree — изолированная копия</h3>
 <div class="card">
-<p>Создаёт и закрывает отдельную копию git-репозитория (worktree), чтобы вносить изменения, не затрагивая основную ветку.</p>
-</div>
-
-<h3>PushNotification и RemoteTrigger</h3>
-<div class="card">
-<p><strong>PushNotification</strong> — отправка уведомлений. <strong>RemoteTrigger</strong> — запуск действий по внешнему событию. Это инструменты для интеграции с внешними системами.</p>
+  <p>Создаёт временную изолированную копию git-репозитория. Полезно для экспериментов: могу пробовать изменения, не затрагивая вашу рабочую ветку.</p>
 </div>
 </section>
 
+<!-- 9 -->
 <section id="skills">
-<h2>8. Навыки (Skills) и слэш-команды</h2>
-<p class="muted">Навыки вызываются командой вида <code>/имя-навыка</code>. Это специализированные сценарии со своими знаниями. Перечислю основные.</p>
+<h2><span class="num">9.</span>Навыки и слэш-команды</h2>
+<p class="muted">Навыки — это специализированные сценарии, которые вызываются командой <code>/название</code>. Они как "режимы эксперта" для конкретных задач.</p>
 
-<h3>Встроенные команды разработки</h3>
+<h3>Разработка и код</h3>
 <div class="card">
-<ul>
-  <li><span class="cmd">/init</span> — создаёт файл <code>CLAUDE.md</code> с документацией по кодовой базе.</li>
-  <li><span class="cmd">/review</span> — ревью pull request'а.</li>
-  <li><span class="cmd">/code-review</span> — ревью текущих изменений на ошибки и упрощения; с уровнем <code>ultra</code> запускает глубокое многоагентное облачное ревью.</li>
-  <li><span class="cmd">/security-review</span> — проверка безопасности изменений в текущей ветке.</li>
-  <li><span class="cmd">/simplify</span> — упрощение и улучшение изменённого кода (без поиска багов).</li>
-  <li><span class="cmd">/verify</span> и <span class="cmd">/run</span> — запуск приложения, чтобы убедиться, что изменения реально работают.</li>
-  <li><span class="cmd">/loop</span> — запуск задачи по повторяющемуся интервалу.</li>
-  <li><span class="cmd">/schedule</span> — создание и управление запланированными удалёнными агентами.</li>
-  <li><span class="cmd">/claude-api</span> — помощь в создании и отладке приложений на Claude API / Anthropic SDK.</li>
-</ul>
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><span class="cmd">/init</span></td><td>Анализирует ваш проект и создаёт файл <code>CLAUDE.md</code> — инструкции для меня о вашем коде</td></tr>
+    <tr><td><span class="cmd">/code-review</span></td><td>Проверяет изменённый код на баги, уязвимости, возможности упрощения</td></tr>
+    <tr><td><span class="cmd">/code-review ultra</span></td><td>Глубокое многоагентное облачное ревью (платно, но очень тщательно)</td></tr>
+    <tr><td><span class="cmd">/review</span></td><td>Ревью конкретного Pull Request на GitHub</td></tr>
+    <tr><td><span class="cmd">/security-review</span></td><td>Проверка безопасности: ищет уязвимости, SQL-инъекции, XSS, небезопасные зависимости</td></tr>
+    <tr><td><span class="cmd">/simplify</span></td><td>Упрощает код: убирает дублирование, делает читаемее</td></tr>
+    <tr><td><span class="cmd">/verify</span></td><td>Запускает приложение и убеждается, что изменения работают в реальности</td></tr>
+    <tr><td><span class="cmd">/run</span></td><td>Запускает проект и показывает как он выглядит</td></tr>
+    <tr><td><span class="cmd">/claude-api</span></td><td>Эксперт по Claude API и Anthropic SDK — помогает строить AI-приложения</td></tr>
+  </table>
 </div>
 
-<h3>Настройка окружения</h3>
+<h3>Автоматизация</h3>
 <div class="card">
-<ul>
-  <li><span class="cmd">/update-config</span> — настройка харнесса через <code>settings.json</code>: разрешения, переменные окружения, хуки (автоматические действия).</li>
-  <li><span class="cmd">/keybindings-help</span> — настройка горячих клавиш.</li>
-  <li><span class="cmd">/fewer-permission-prompts</span> — уменьшение числа запросов на подтверждение за счёт списка разрешённых команд.</li>
-  <li><span class="cmd">/statusline-setup</span> — настройка строки статуса.</li>
-</ul>
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><span class="cmd">/loop [интервал]</span></td><td>Повторяет задачу через заданный интервал (например <code>/loop 5m</code>)</td></tr>
+    <tr><td><span class="cmd">/schedule</span></td><td>Создаёт и управляет запланированными агентами по расписанию</td></tr>
+    <tr><td><span class="cmd">/loop</span> (без интервала)</td><td>Я сам решаю когда запускаться — умный самостоятельный режим</td></tr>
+  </table>
 </div>
 
-<h3>Экосистема Vercel</h3>
+<h3>Настройка</h3>
 <div class="card">
-<p>Большой набор навыков с префиксом <code>vercel:</code> для работы с платформой Vercel. Среди них:</p>
-<ul>
-  <li><strong>deploy, status, env</strong> — деплой, статус проекта и управление переменными окружения;</li>
-  <li><strong>ai-sdk, ai-gateway, chat-sdk</strong> — построение AI-функций, маршрутизация моделей, чат-боты;</li>
-  <li><strong>nextjs, next-forge, turbopack, shadcn</strong> — помощь по Next.js, монорепозиториям, бандлеру и UI-компонентам;</li>
-  <li><strong>vercel-firewall, vercel-functions, vercel-storage, vercel-sandbox</strong> — безопасность, серверные функции, хранилища, изолированный запуск кода;</li>
-  <li><strong>workflow, marketplace, auth</strong> — устойчивые рабочие процессы, интеграции, аутентификация.</li>
-</ul>
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><span class="cmd">/update-config</span></td><td>Настройка Claude Code: разрешения, переменные окружения, автоматические хуки</td></tr>
+    <tr><td><span class="cmd">/keybindings-help</span></td><td>Настройка горячих клавиш</td></tr>
+    <tr><td><span class="cmd">/fewer-permission-prompts</span></td><td>Уменьшает количество запросов "разрешить?" за счёт белого списка команд</td></tr>
+    <tr><td><span class="cmd">/statusline-setup</span></td><td>Настройка строки статуса в терминале</td></tr>
+  </table>
+</div>
+
+<h3>Встроенные команды (не навыки)</h3>
+<div class="card">
+  <table>
+    <tr><th>Команда</th><th>Что делает</th></tr>
+    <tr><td><span class="cmd">/help</span></td><td>Справка по Claude Code</td></tr>
+    <tr><td><span class="cmd">/clear</span></td><td>Очистить контекст разговора</td></tr>
+    <tr><td><span class="cmd">/config</span></td><td>Быстрые настройки: тема, модель, язык</td></tr>
+    <tr><td><span class="cmd">/fast</span></td><td>Включить быстрый режим (Claude Opus с ускоренным выводом)</td></tr>
+    <tr><td><span class="cmd">/status</span></td><td>Статус проекта (доступно не везде)</td></tr>
+  </table>
 </div>
 </section>
 
+<!-- 10 -->
 <section id="memory">
-<h2>9. Память</h2>
+<h2><span class="num">10.</span>Память между сессиями</h2>
 <div class="card">
-<p>У меня есть постоянная файловая память. В ней я сохраняю отдельными файлами важные факты: кто вы (роль, предпочтения), обратную связь о том, как мне лучше работать, контекст текущих проектов и ссылки на внешние ресурсы. Это помогает не терять важные детали между сессиями. При этом я не дублирую то, что и так есть в коде или истории Git.</p>
+  <p>Я помню информацию между разговорами — сохраняю её в файлы на вашем компьютере в папке <code>~/.claude/projects/.../memory/</code>.</p>
+</div>
+
+<h3>Что я запоминаю</h3>
+<div class="grid2">
+  <div class="card">
+    <span class="tag">user</span>
+    <p>Кто вы: профессия, уровень, предпочтения. Чтобы объяснять на вашем уровне.</p>
+    <p class="muted"><em>Пример: "Пользователь — дата-сайентист, слабо знает фронтенд"</em></p>
+  </div>
+  <div class="card">
+    <span class="tag">feedback</span>
+    <p>Как вам нравится работать со мной: что делать, что не делать.</p>
+    <p class="muted"><em>Пример: "Не писать длинные резюме после каждого ответа"</em></p>
+  </div>
+  <div class="card">
+    <span class="tag">project</span>
+    <p>Контекст проектов: цели, дедлайны, решения, причины.</p>
+    <p class="muted"><em>Пример: "Рефакторинг auth из-за требований compliance"</em></p>
+  </div>
+  <div class="card">
+    <span class="tag">reference</span>
+    <p>Ссылки на внешние системы: где баги, где документация, какой дашборд смотреть.</p>
+    <p class="muted"><em>Пример: "Баги трекаются в Linear проекте INGEST"</em></p>
+  </div>
+</div>
+
+<div class="card green">
+  <strong>Попробуйте прямо сейчас:</strong> Скажите мне что-нибудь важное о себе или своём проекте — я запомню это и буду знать в следующий раз. Например: "Запомни, что я делаю стартап в сфере EdTech и предпочитаю Python."
+</div>
+
+<h3>Что я НЕ сохраняю в память</h3>
+<div class="card">
+  <ul>
+    <li>Структуру кода и архитектуру — её лучше читать из самого кода</li>
+    <li>Историю git — для этого есть <code>git log</code></li>
+    <li>Временные задачи текущего разговора</li>
+    <li>То, что уже описано в <code>CLAUDE.md</code> вашего проекта</li>
+  </ul>
 </div>
 </section>
 
-<section id="conclusion">
-<h2>10. Заключение</h2>
+<!-- 11 -->
+<section id="vercel">
+<h2><span class="num">11.</span>Экосистема Vercel</h2>
+<p class="muted">Если вы деплоите на Vercel — у меня есть целый набор специализированных навыков.</p>
+
 <div class="card">
-<p>Набор инструментов Claude Code построен вокруг простой идеи: каждое действие — это отдельный, предсказуемый инструмент. Чтение и запись файлов, выполнение команд, поиск, веб-доступ, подагенты, планирование задач, навыки и память вместе превращают меня из «чат-бота» в полноценного агента, способного выполнять реальную работу по разработке от начала до конца — исследовать проект, вносить изменения, проверять результат и автоматизировать рутину.</p>
-<p class="muted">Документ подготовлен Claude Code, 1 июня 2026 года.</p>
+  <table>
+    <tr><th>Навык</th><th>Что делает</th></tr>
+    <tr><td><span class="cmd">/vercel:deploy</span></td><td>Деплой проекта (preview или production)</td></tr>
+    <tr><td><span class="cmd">/vercel:status</span></td><td>Статус последних деплоев, информация о проекте</td></tr>
+    <tr><td><span class="cmd">/vercel:env</span></td><td>Управление переменными окружения: list, add, pull, remove</td></tr>
+    <tr><td><span class="cmd">/vercel:ai-sdk</span></td><td>Эксперт по Vercel AI SDK: чат, стриминг, агенты, инструменты</td></tr>
+    <tr><td><span class="cmd">/vercel:ai-gateway</span></td><td>Маршрутизация между AI-моделями, failover, cost tracking</td></tr>
+    <tr><td><span class="cmd">/vercel:nextjs</span></td><td>Экспертиза по Next.js: App Router, Server Components, RSC</td></tr>
+    <tr><td><span class="cmd">/vercel:auth</span></td><td>Аутентификация: Clerk, Auth0, Descope для Next.js</td></tr>
+    <tr><td><span class="cmd">/vercel:marketplace</span></td><td>Интеграции: базы данных, CMS, сервисы из маркетплейса Vercel</td></tr>
+    <tr><td><span class="cmd">/vercel:bootstrap</span></td><td>Полная настройка проекта с нуля: БД, env, первый запуск</td></tr>
+    <tr><td><span class="cmd">/vercel:vercel-storage</span></td><td>Хранилища: Vercel KV, Blob, Postgres</td></tr>
+    <tr><td><span class="cmd">/vercel:vercel-functions</span></td><td>Edge Functions и Serverless Functions</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- 12 -->
+<section id="security">
+<h2><span class="num">12.</span>Безопасность и ограничения</h2>
+
+<h3>Что я никогда не делаю без разрешения</h3>
+<div class="card">
+  <ul>
+    <li><strong>Force push</strong> в Git — можно потерять чужую работу</li>
+    <li><strong>Удаление файлов и папок</strong> — особенно если не уверен что они временные</li>
+    <li><strong>Push в main/master</strong> — это публичное действие</li>
+    <li><strong>Отправка сообщений</strong> (Slack, email, GitHub комментарии)</li>
+    <li><strong>Изменение CI/CD</strong> и production-конфигурации</li>
+    <li><strong>Работа с секретами и паролями</strong> — никогда не сохраняю их в память или файлы</li>
+  </ul>
+</div>
+
+<h3>Что я не делаю принципиально</h3>
+<div class="card">
+  <ul>
+    <li>Не генерирую вредоносный код (вирусы, малварь, DoS-атаки)</li>
+    <li>Не помогаю обходить системы безопасности без явного контекста (пентест, CTF)</li>
+    <li>Не выполняю команды с <code>--no-verify</code> или <code>--no-gpg-sign</code> — не обхожу хуки</li>
+    <li>Не сохраняю <code>.env</code> файлы и секреты в Git</li>
+  </ul>
+</div>
+
+<div class="card blue">
+  <strong>Принцип "семь раз отмерь":</strong> Если действие необратимо (удаление, force push, сообщение в Slack) — я остановлюсь и спрошу вас, даже если вы не просили. Цена паузы низкая, цена ошибки — высокая.
+</div>
+</section>
+
+<!-- 13 -->
+<section id="examples">
+<h2><span class="num">13.</span>Реальные примеры из жизни</h2>
+
+<h3>Сценарий 1: "Сделай мне сайт-визитку"</h3>
+<div class="example">
+  <div class="label">Что произойдёт</div>
+  <ol>
+    <li>Уточню: какой стиль, что написать, нужен ли деплой</li>
+    <li>Создам <code>index.html</code>, <code>style.css</code>, <code>script.js</code></li>
+    <li>Запущу локальный сервер через Bash, проверю что всё открывается</li>
+    <li>Если нужно — задеплою на Vercel за 2 минуты</li>
+  </ol>
+</div>
+
+<h3>Сценарий 2: "Найди баг — приложение падает при регистрации"</h3>
+<div class="example">
+  <div class="label">Что произойдёт</div>
+  <ol>
+    <li>Прочитаю файлы, связанные с регистрацией</li>
+    <li>Поищу Grep-ом по ключевым словам (register, signup, user)</li>
+    <li>Найду проблему, объясню причину</li>
+    <li>Исправлю и запущу тесты чтобы убедиться</li>
+  </ol>
+</div>
+
+<h3>Сценарий 3: "Переведи мой проект с JavaScript на TypeScript"</h3>
+<div class="example">
+  <div class="label">Что произойдёт</div>
+  <ol>
+    <li>Найду все <code>.js</code> файлы через Glob</li>
+    <li>Настрою <code>tsconfig.json</code></li>
+    <li>Конвертирую файлы по одному, добавлю типы</li>
+    <li>Запущу <code>tsc</code> — проверю что ошибок нет</li>
+    <li>Создам коммит с понятным сообщением</li>
+  </ol>
+</div>
+
+<h3>Сценарий 4: "Сделай Telegram-бота который отвечает на голосовые"</h3>
+<div class="example">
+  <div class="label">Что произойдёт</div>
+  <ol>
+    <li>Создам проект: <code>bot.py</code>, <code>requirements.txt</code>, <code>.env.example</code></li>
+    <li>Голос → Whisper (транскрипция) → Claude (ответ) → Telegram</li>
+    <li>Установлю зависимости через Bash</li>
+    <li>Объясню что нужно для запуска (токены)</li>
+  </ol>
+</div>
+
+<h3>Сценарий 5: "Проверь безопасность моего API"</h3>
+<div class="example">
+  <div class="label">Что произойдёт</div>
+  <ol>
+    <li>Запущу <code>/security-review</code></li>
+    <li>Поищу SQL-инъекции, XSS, небезопасную обработку данных</li>
+    <li>Проверю зависимости на известные уязвимости</li>
+    <li>Дам список находок с оценкой серьёзности и способами исправления</li>
+  </ol>
+</div>
+</section>
+
+<!-- 14 -->
+<section id="conclusion">
+<h2><span class="num">14.</span>Итог: что я такое</h2>
+<div class="card">
+  <p>Claude Code — это не просто чат-бот, который отвечает на вопросы. Это агент, который реально работает с вашим компьютером и проектами.</p>
+
+  <p>Я читаю и пишу файлы. Запускаю команды. Ищу по коду и интернету. Работаю с Git и GitHub. Запоминаю кто вы и что важно для вашего проекта. Могу запускать других специализированных AI-агентов для сложных задач. Умею деплоить, проверять безопасность, делать ревью кода.</p>
+
+  <p>При этом у меня есть границы: я не делаю необратимых вещей без вашего разрешения, не работаю со злым умыслом, не обхожу системы защиты без контекста.</p>
+
+  <p>Лучший способ понять что я умею — просто попробовать. Дайте мне реальную задачу.</p>
+</div>
+
+<div class="card green">
+  <strong>С чего начать прямо сейчас:</strong>
+  <ol>
+    <li>Напишите <code>/init</code> — я изучу ваш проект и создам для себя инструкции</li>
+    <li>Опишите задачу естественным языком — я разберусь как её решить</li>
+    <li>Расскажите о себе — я запомню и буду работать в вашем стиле</li>
+  </ol>
 </div>
 </section>
 
 <footer>
-  Сгенерировано Claude Code · Anthropic
+  Написано Claude Sonnet 4.6 · Anthropic · 1 июня 2026 года<br>
+  <small>Эссе обновляется — если что-то изменилось или вы хотите добавить раздел, просто попросите меня.</small>
 </footer>
 
 </div>
